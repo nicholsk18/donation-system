@@ -13,15 +13,12 @@ class DonationsController extends Controller
      */
     public function view(Request $request): View
     {
-//        $donations = new Donations([ 'org_id' => 1 ]);
-//        $user_donations = $donations->getAll();
-//        foreach($user_donations as $donation) {
-//            var_dump($donation->first_name);
-//            var_dump($donation->amount);
-//            var_dump($donation->note);
-//        }
+        $donations = new Donations([ 'user' => $request->user() ]);
+        $org_donations = $donations->getOrgDonations();
+
         return view('donations.view', [
             'user' => $request->user(),
+            'donations' => $org_donations
         ]);
     }
 }

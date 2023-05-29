@@ -13,7 +13,11 @@
         </x-nav-link>
 
         <x-nav-link :href="route('donations.view')" :active="request()->routeIs('donations.view')">
-            {{ __('Donations') }}
+            {{ __('User Donations') }}
+        </x-nav-link>
+
+        <x-nav-link :href="route('organization.users')" :active="request()->routeIs('organization.users')">
+            {{ __('Organization Users') }}
         </x-nav-link>
     </div>
 </div>

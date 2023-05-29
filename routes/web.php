@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DonationsController;
+use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,14 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/donations', [DonationsController::class, 'view'])->name('donations.view');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/organization', [OrganizationController::class, 'view'])->name('organization.view');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/organization/users', [OrganizationController::class, 'users'])->name('organization.users');
 });
 
 Route::middleware('auth')->group(function () {

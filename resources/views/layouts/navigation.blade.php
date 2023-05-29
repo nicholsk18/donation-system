@@ -1,7 +1,14 @@
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 rounded-lg mt-6 sm:mx-6 lg:mx-8 space-y-6">
     <!-- Primary Navigation Menu -->
     <div class="mx-auto sm:px-6 lg:px-8 space-y-6">
-        <div class="flex justify-end h-16">
+        <div class="flex justify-between h-16">
+
+            <!-- Page Heading -->
+            @if (isset($header))
+                <div class="flex items-center">
+                    {{ $header }}
+                </div>
+            @endif
 
 {{--            <div class="flex">--}}
 {{--                <!-- Logo -->--}}
@@ -41,9 +48,13 @@
 
                         @if (Auth::user()->super_admin)
                             <x-dropdown-link :href="route('register.user')">
-                                {{ __('Register') }}
+                                {{ __('Register User') }}
                             </x-dropdown-link>
                         @endif
+
+                        <x-dropdown-link :href="route('organization.view')">
+                            {{ __('My Organization') }}
+                        </x-dropdown-link>
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
