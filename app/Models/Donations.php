@@ -20,46 +20,26 @@ class Donations extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-
         'user_id',
         'org_id',
         'amount',
         'note',
     ];
 
-    protected $attributes = [
-        'user_id' => 0,
-        'org_id' => 0,
-        'super_admin' => 0,
-        'admin' => 0
-    ];
+    protected $admin_types = [ 'Super Admin', 'Admin' ];
 
-    public function __construct(array $attributes = [])
-    {
+    public function __construct(array $attributes = []) {
         parent::__construct($attributes);
-
-        if (isset($attributes['user'])) {
-            $this->attributes['user_id'] = $attributes['user']->id;
-            $this->attributes['org_id'] = $attributes['user']->org_id;
-            $this->attributes['super_admin'] = $attributes['user']->super_admin;
-            $this->attributes['admin'] = $attributes['user']->admin;
-        }
-
     }
 
-    public function getOrgDonations(): object {
-        $user_id = $this->attributes['user_id'];
-        $org_id = $this->attributes['org_id'];
-        $is_admin = $this->attributes['admin'];
-
+    public function getDonationsByUser($user): object {
         $donations_query = DB::table($this->table);
+        $donations_query->where($this->table . '.org_id', $user->org_id);
 
-        // if admin get all org donations
-        if ($is_admin) {
-            $donations_query->where($this->table . '.org_id', $org_id);
-        } else {
-            $donations_query->where($this->table . '.org_id', $org_id)
-                ->where($this->table . '.user_id', $user_id);
+        // If not admin, filter by user id
+        if (!in_array($user->user_type, $this->admin_types)) {
+            $donations_query->where($this->table . '.org_id', $user->id)
+                ->where($this->table . '.user_id', $user->id);
         }
 
         $donations_query->leftJoin('users', 'users.id', '=', 'user_id')
