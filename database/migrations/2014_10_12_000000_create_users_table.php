@@ -15,9 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-//            $table->boolean('super_admin');
-//            $table->boolean('admin');
-            $table->enum('user_type', ['Super Admin', 'Admin', 'User'])->default('User');
+            $table->enum('user_type', ['Super Admin', 'Admin', 'User', 'Demo'])->default('User');
             $table->integer('org_id');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
