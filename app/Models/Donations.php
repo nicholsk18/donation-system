@@ -38,8 +38,7 @@ class Donations extends Model
 
         // If not admin, filter by user id
         if (!in_array($user->user_type, $this->admin_types)) {
-            $donations_query->where($this->table . '.org_id', $user->id)
-                ->where($this->table . '.user_id', $user->id);
+            $donations_query->where($this->table . '.user_id', $user->id);
         }
 
         $donations_query->leftJoin('users', 'users.id', '=', 'user_id')
@@ -47,5 +46,30 @@ class Donations extends Model
             ->orderBy('last_name');
 
         return $donations_query->get();
+    }
+
+    public function donations_ytd($user): int {
+        $donations_query = DB::table($this->table);
+        $donations_query->where($this->table . '.org_id', $user->org_id);
+        $donations_query->where('created_at', '>=', date('Y-m-d', strtotime('first day of january this year')));
+
+        // If not admin, filter by user id
+        if (!in_array($user->user_type, $this->admin_types)) {
+            $donations_query->where($this->table . '.user_id', $user->id);
+        }
+
+        return (int) $donations_query->sum('amount');
+    }
+    public function donations_month($user): int {
+        $donations_query = DB::table($this->table);
+        $donations_query->where($this->table . '.org_id', $user->org_id);
+        $donations_query->where('created_at', '>=', date('Y-m-01'));
+
+        // If not admin, filter by user id
+        if (!in_array($user->user_type, $this->admin_types)) {
+            $donations_query->where($this->table . '.user_id', $user->id);
+        }
+
+        return (int) $donations_query->sum('amount');
     }
 }

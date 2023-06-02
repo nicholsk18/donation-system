@@ -13,11 +13,17 @@
         </x-nav-link>
 
         <x-nav-link :href="route('donations.view')" :active="request()->routeIs('donations.view')">
-            {{ __('User Donations') }}
+            @if(isset(request()->user()->user_type) && request()->user()->user_type !== 'User')
+                {{ __('Org Donations') }}
+            @else
+                {{ __('User Donations') }}
+            @endif
         </x-nav-link>
 
-        <x-nav-link :href="route('organization.users')" :active="request()->routeIs('organization.users')">
-            {{ __('Organization Users') }}
-        </x-nav-link>
+        @if(isset(request()->user()->user_type) && request()->user()->user_type !== 'User')
+            <x-nav-link :href="route('organization.users')" :active="request()->routeIs('organization.users')">
+                {{ __('Organization Users') }}
+            </x-nav-link>
+        @endif
     </div>
 </div>
