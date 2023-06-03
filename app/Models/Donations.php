@@ -32,9 +32,10 @@ class Donations extends Model
         parent::__construct($attributes);
     }
 
-    public function getDonationsByUser($user): object {
+    public function get_donations_by_user($user, $limit = false, $offset = false): object {
         $donations_query = DB::table($this->table);
         $donations_query->where($this->table . '.org_id', $user->org_id);
+        $donations_query->orderByDesc('created_at');
 
         // If not admin, filter by user id
         if (!in_array($user->user_type, $this->admin_types)) {
@@ -44,6 +45,12 @@ class Donations extends Model
         $donations_query->leftJoin('users', 'users.id', '=', 'user_id')
             ->select("$this->table.*", 'users.first_name', 'users.last_name')
             ->orderBy('last_name');
+
+        // limit returns for latest
+        // possible pagination later
+        if ($limit && $offset) {
+            $donations_query->offset(0)->limit(10);
+        }
 
         return $donations_query->get();
     }
