@@ -1,13 +1,13 @@
 <x-app-layout>
     <x-nav-header>{{ __("Donations") }}</x-nav-header>
 
-    <div class="py-12">
-        <div class="w-full mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("Donations") }}
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-table :caption="'Donations'" :columns="[ 'User', 'Date', 'Amount' ]">
+        @foreach($donations as $donation)
+            <tr>
+                <td class="px-4 py-2 border border-gray-700">{{ $donation->first_name }} {{ $donation->last_name }}</td>
+                <td class="px-4 py-2 border border-gray-700">{{ date('j F, Y', strtotime($donation->created_at)) }}</td>
+                <td class="px-4 py-2 border border-gray-700">${{ number_format($donation->amount, 2) }}</td>
+            </tr>
+        @endforeach
+    </x-table>
 </x-app-layout>

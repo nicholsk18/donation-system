@@ -6,7 +6,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <link rel="icon" type="image/x-icon" href="{{ Vite::asset('resources/images/DivineDonor.png') }}">
+        <link rel="icon" type="image/x-icon" href="{{ Vite::asset('resources/images/icon.png') }}">
 
         <title>{{ config('app.name', 'Laravel') }} - {{ $header_title ?? '' }}</title>
 

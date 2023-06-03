@@ -15,7 +15,7 @@ class DonationsController extends Controller
     {
         $user = $request->user();
         $donations_class = new Donations();
-        $donations = $donations_class->get_donations_by_user($user);
+        $donations = $donations_class->get_donations($user);
 
         return view('donations.view', [
             'user' => $user,

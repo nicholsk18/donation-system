@@ -14,7 +14,7 @@ class DashboardController extends Controller
     public function view(Request $request): View {
         $user = $request->user();
         $donations_class = new Donations();
-        $latest_donations = $donations_class->get_donations_by_user($user, 0, 10);
+        $latest_donations = $donations_class->get_donations($user, 0, 10);
         $donations_ytd = $donations_class->donations_ytd($user);
         $donations_month = $donations_class->donations_month($user);
 

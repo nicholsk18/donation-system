@@ -32,7 +32,7 @@ class Donations extends Model
         parent::__construct($attributes);
     }
 
-    public function get_donations_by_user($user, $limit = false, $offset = false): object {
+    public function get_donations($user, $limit = false, $offset = false): object {
         $donations_query = DB::table($this->table);
         $donations_query->where($this->table . '.org_id', $user->org_id);
         $donations_query->orderByDesc('created_at');
@@ -65,18 +65,18 @@ class Donations extends Model
             $donations_query->where($this->table . '.user_id', $user->id);
         }
 
-        return (int) $donations_query->sum('amount');
+        return (int) $donations_query->get()->sum('amount');
     }
     public function donations_month($user): int {
         $donations_query = DB::table($this->table);
-        $donations_query->where($this->table . '.org_id', $user->org_id);
         $donations_query->where('created_at', '>=', date('Y-m-01'));
+        $donations_query->where('org_id', $user->org_id);
 
         // If not admin, filter by user id
         if (!in_array($user->user_type, $this->admin_types)) {
-            $donations_query->where($this->table . '.user_id', $user->id);
+            $donations_query->where('user_id', $user->id);
         }
 
-        return (int) $donations_query->sum('amount');
+        return (int) $donations_query->get()->sum('amount');
     }
 }
