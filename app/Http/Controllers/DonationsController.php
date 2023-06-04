@@ -18,6 +18,7 @@ class DonationsController extends Controller
         $donations = $donations_class->get_donations($user);
 
         return view('donations.view', [
+            'title' => 'Donations',
             'user' => $user,
             'donations' => $donations
         ]);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Organization;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -13,7 +14,8 @@ class OrganizationController extends Controller
     public function view(Request $request): View
     {
         return view('organization.view', [
-            'user' => $request->user()
+            'title' => 'Organization',
+            'users' => $request->user(),
         ]);
     }
 
@@ -22,7 +24,12 @@ class OrganizationController extends Controller
      */
     public function users(Request $request): View
     {
+        $user = $request->user();
+        $org = new Organization();
+        $user = $org->get_org_users($user->org_id);
+
         return view('organization.users', [
+            'title' => 'Organizations users',
             'user' => $request->user()
         ]);
     }

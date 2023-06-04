@@ -8,7 +8,7 @@
         <thead>
         <tr class="text-left">
             @foreach((Array) $columns as $column)
-                <th class="px-4 py-2 border border-gray-700 bg-gray-800 text-xl w-1/3">{{ $column }}</th>
+                <th {!! $attributes->merge([ 'class' => 'px-4 py-2 border border-gray-700 bg-gray-800 text-xl' ]) !!}>{{ $column }}</th>
             @endforeach
         </tr>
         </thead>

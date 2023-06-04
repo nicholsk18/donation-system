@@ -17,14 +17,14 @@
     </head>
     <body class="font-sans text-gray-900 antialiased bg-gray-100 dark:bg-gray-900">
         <div class="container mx-auto text-white mt-3">
-            <div class="flex justify-between">
-                <div>
+            <div class="flex justify-between mx-5 my-7">
+                <div class="my-auto">
                     <a href="/">
                         <x-application-logo class="w-52 fill-current text-gray-500" />
                     </a>
                 </div>
                 @if (Route::has('login'))
-                    <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
+                    <div class="my-auto">
                         @auth
                             <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
                         @else
